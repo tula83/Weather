@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather app</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+
+     <style>
+        h2{
+            background-color: #AFAEAC;
+            color: white;
+        }
+        h1{
+            background-color: #3A5BF0;
+            color: #FA3C0A;
+        }
+        div{
+            margin: 4rem;
+        }
+    
+    body{
+        background-color: #F6B877;
+        width: 30rem;
+        border-color: #3A5BF0;
+        align-items: center;
+        justify-content: center;
+        padding: 4rem;
+    }
+    </style>
+   
+</head>
+
+<body>
+         <h2 class="first">Angularjs simple weather app</h2>
+     
+       <div ng-app="myApp" ng-controller="myController">
+          <input type="text" name='city' placeholder='enter city' ng-model="city">
+          <button ng-click="search()">Search</button>
+            <h1>    {{temperature}} </h1>
+           <h1>Minimum_temperature: {{temp_min}} <sup>.</sup>C</h1>
+           <h1>Maximum_temperature: {{temp_max}} <sup>.</sup>C</h1>
+           <h2>Weather:{{weather}}</h2>
+          
+
+       </div>
+
+</body>
+<script>
+     var app=angular.module('myApp',[]);
+     app.controller('myController',function($scope,$http){
+         $scope.search=function(){
+            var city2=$scope.city;
+            console.log(city2)
+             $http.get("https://api.openweathermap.org/data/2.5/weather?q="+city2+"&appid=44abc21c5aae28fdc1d555625e4b83a7")
+             .then(function(response) {
+                var temp2=response.data.main.temp;
+                var temp_min=response.data.main.temp_min-273.5;
+                var temp_max=response.data.main.temp_max-273.5;
+
+                var actual_data=Number(temp2)-273.5
+                 $scope.temperature=actual_data.toFixed(2)+" degree Celsius "
+                 $scope.temp_min=temp_min.toFixed(2);
+                 $scope.temp_max=temp_max.toFixed(2);
+                 $scope.weather=response.data.weather[0].description
+
+                }
+            
+           ).catch((function(){
+                  alert("not found");
+           }))
+        
+        }
+        }
+      );
+   
+     
+//  https://api.openweathermap.org/data/2.5/weather?q=Madrid&appid=44abc21c5aae28fdc1d555625e4b83a7
+     
+</script>
+
+</html>
