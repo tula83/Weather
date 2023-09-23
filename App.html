@@ -54,7 +54,7 @@
          $scope.search=function(){
             var city2=$scope.city;
             console.log(city2)
-             $http.get("https://api.openweathermap.org/data/2.5/weather?q="+city2+"&appid=44abc21c5aae28fdc1d555625e4b83a7")
+             $http.get("https://api.openweathermap.org/data/2.5/weather?q="+city2+"&appid=your_api_id")
              .then(function(response) {
                 var temp2=response.data.main.temp;
                 var temp_min=response.data.main.temp_min-273.5;
